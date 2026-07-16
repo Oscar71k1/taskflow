@@ -1,15 +1,18 @@
 import { useState } from 'react'
-
-const allowedCredentials = { email: 'demo@escuela.edu.mx', password: 'demo1234' }
+import { useLocation, useNavigate } from 'react-router-dom'
+import { supabase } from '../supabaseClient'
 
 const validateEmail = (value) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
 }
 
 export function useLoginForm(onLoginSuccess = () => console.log('Login exitoso')) {
+  const navigate = useNavigate()
+  const location = useLocation()
   const [values, setValues] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [successMessage] = useState(() => location.state?.successMessage ?? null)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -17,7 +20,7 @@ export function useLoginForm(onLoginSuccess = () => console.log('Login exitoso')
     setErrors((current) => ({ ...current, [name]: undefined, credentials: undefined }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     const newErrors = {}
@@ -33,23 +36,34 @@ export function useLoginForm(onLoginSuccess = () => console.log('Login exitoso')
       return
     }
 
-    if (values.email !== allowedCredentials.email || values.password !== allowedCredentials.password) {
-      setErrors({ credentials: 'Credenciales incorrectas' })
-      return
-    }
-
     setErrors({})
     setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      })
+
+      if (error) {
+        setErrors({ credentials: 'Correo o contraseña incorrectos' })
+        return
+      }
+
       onLoginSuccess({ email: values.email })
-    }, 1000)
+      navigate('/tablero')
+    } catch {
+      setErrors({ credentials: 'Correo o contraseña incorrectos' })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return {
     values,
     errors,
     isLoading,
+    successMessage,
     handleChange,
     handleSubmit,
   }

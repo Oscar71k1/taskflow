@@ -174,6 +174,14 @@ export default function RegisterPage({ onRegisterSuccess }) {
                   {isLoading ? 'Creando cuenta...' : 'Crear mi cuenta'}
                 </span>
               </button>
+              {errors.submit && (
+                <div className="mt-3 text-center">
+                  <p className="text-xs text-[#E53E3E] flex items-center justify-center">
+                    <AlertCircle className="w-4 h-4 mr-1" />
+                    {errors.submit}
+                  </p>
+                </div>
+              )}
             </form>
 
             <p className="text-center text-sm mt-6" style={{ fontFamily: 'Nunito, sans-serif' }}>

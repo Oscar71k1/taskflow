@@ -11,7 +11,7 @@ export default function LoginPage({ onLoginSuccess = () => console.log('Login ex
     setIsLoggedIn(true)
   }
 
-  const { values, errors, isLoading, handleChange, handleSubmit } = useLoginForm(handleLoginSuccess)
+  const { values, errors, isLoading, successMessage, handleChange, handleSubmit } = useLoginForm(handleLoginSuccess)
 
   const features = [
     {
@@ -103,6 +103,12 @@ export default function LoginPage({ onLoginSuccess = () => console.log('Login ex
             <p className="text-gray-500 mb-8 text-base font-normal" style={{ fontFamily: 'Nunito, sans-serif' }}>
               Inicia sesión para acceder a tu espacio de trabajo
             </p>
+
+            {successMessage && (
+              <p className="mb-6 text-sm text-[#2F855A] text-center" style={{ fontFamily: 'Nunito, sans-serif' }}>
+                {successMessage}
+              </p>
+            )}
 
             <form className="space-y-5" onSubmit={handleSubmit}>
               <div>
