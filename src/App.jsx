@@ -8,6 +8,8 @@ import MisEquiposPage from './pages/MisEquiposPage.jsx'
 import MisTareasPage from './pages/MisTareasPage.jsx'
 import PanelAvancePage from './pages/PanelAvancePage.jsx'
 
+import BandejaPage from './pages/BandejaPage.jsx'
+
 export default function App() {
   return (
     <Routes>
@@ -18,6 +20,7 @@ export default function App() {
       <Route path="/mis-tableros" element={<MisTablerosPage />} />
       <Route path="/mis-equipos" element={<MisEquiposPage />} />
       <Route path="/mis-tareas" element={<MisTareasPage />} />
+      <Route path="/bandeja" element={<BandejaPage />} />
       <Route path="/proyecto/:id" element={<ProyectoDetailPage />} />
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />

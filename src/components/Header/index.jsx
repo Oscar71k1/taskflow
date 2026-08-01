@@ -6,7 +6,7 @@ const navItems = [
   { label: 'Panel de Avance', Icon: TrendingUp, path: '/panel-avance' },
   { label: 'Mis Tableros', Icon: Book, path: '/mis-tableros' },
   { label: 'Mis Equipos', Icon: Users, path: '/mis-equipos' },
-  { label: 'Bandeja', Icon: Inbox, path: null },
+  { label: 'Bandeja', Icon: Inbox, path: '/bandeja' },
   { label: 'Mis Tareas', Icon: CheckSquare, path: '/mis-tareas' },
 ]
 
